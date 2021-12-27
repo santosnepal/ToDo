@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Enter New Task</label>
+            <textarea name='task' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Completed</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+             {% for d in data %}
+             <tbody>
+                    <td>{{d.task}}</td>
+                    <td>{% if d.completed %} 
+                        Yes
+                        {% else %}
+                        No
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if d.completed %} 
+                        <button type="button"  disabled = 'disabled' class="btn btn-success">Completed</button>
+                        {% else %}
+                        <a  href= " {% url 'remover' whom=d.id %} " type="button" class="btn btn-success">Completed</a>
+                        {% endif %}
+                    </td>
+                </tbody>
+                {% endfor  %}
+            
+        </table>
+    </div>
+{% endblock 'content' %}
